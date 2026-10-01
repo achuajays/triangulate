@@ -58,5 +58,5 @@ def test_extra_points_are_preserved_not_dropped():
 
     # Off-topic content must not silently vanish.
     flat = [p["claim"] for row in result.to_dict()["rows"] for pts in row["by_source"].values() for p in pts]
-    all_claims = flat + [p["claim"] for p in result.extra_points]
+    all_claims = flat + [p.claim for p in result.extra_points]
     assert any("coffee" in c for c in all_claims)

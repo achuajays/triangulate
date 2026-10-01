@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from typing import Sequence
 
-from .backends.base import Backend
-from .base import Point
+from .base import Backend, Point
 
 # A source input is (source_id, raw_text).
 SourceInput = tuple[str, str]

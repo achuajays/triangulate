@@ -29,19 +29,19 @@ class TestAlignsWithDimensions:
         assert len(aligned.extra_points) == 0
 
     def test_unmentioned_dimension_is_explicit_empty_bucket(self):
-        extracted = [pts(("", "system design", "solid design"))]
+        extracted = [pts(("", "system design", "solid design")), [], []]
         aligned = Aligner().align(SOURCES, extracted, dimensions=["system design", "culture fit"])
 
         assert aligned.by_source["culture fit"] == {"a": [], "b": [], "c": []}
 
     def test_source_ids_are_stamped(self):
-        extracted = [pts(("", "system design", "solid design"))]
+        extracted = [pts(("", "system design", "solid design")), [], []]
         aligned = Aligner().align(SOURCES, extracted, dimensions=["system design"])
 
         assert aligned.by_source["system design"]["a"][0].source_id == "a"
 
     def test_near_miss_dimension_label_snaps_to_requested(self):
-        extracted = [pts(("", "designing of systems", "designed a cache layer"))]
+        extracted = [pts(("", "designing of systems", "designed a cache layer")), [], []]
         aligned = Aligner().align(SOURCES, extracted, dimensions=["system design"])
 
         assert aligned.dimensions == ["system design"]
@@ -65,7 +65,7 @@ class TestNeverSplits:
         assert assignments == 1
 
     def test_weak_overlap_goes_to_extra_points_not_a_guess(self):
-        extracted = [pts(("", "weather", "sunny and warm outside"))]
+        extracted = [pts(("", "weather", "sunny and warm outside")), [], []]
         aligned = Aligner().align(SOURCES, extracted, dimensions=["system design", "communication"])
 
         assert aligned.extra_points and aligned.extra_points[0].source_id == "a"

@@ -95,8 +95,11 @@ class ConflictScan:
         mentioned: dict[str, list[Point]],
         report: ScanReport,
     ) -> None:
-        positives = [sid for sid, pts in mentioned.items() if _any_positive(pts)]
-        negatives = [sid for sid, pts in mentioned.items() if _any_negative(pts)]
+        positives = [sid for sid, pts in mentioned.items() if _any(pts, "pos")]
+        negatives = [
+            sid for sid, pts in mentioned.items()
+            if _any(pts, "neg") and sid not in positives
+        ]
 
         if positives and negatives:
             involved = sorted(set(positives) | set(negatives))
@@ -135,17 +138,29 @@ class ConflictScan:
                 return  # one flag per dimension
 
 
-def _any_negative(points: list[Point]) -> bool:
-    return any(_has_cue(pt.claim, _NEGATION_CUES) for pt in points)
+def _any(points: list[Point], stance: str) -> bool:
+    return any(_stance(pt.claim) == stance for pt in points)
 
 
-def _any_positive(points: list[Point]) -> bool:
-    return any(_has_cue(pt.claim, _POSITIVE_CUES) for pt in points)
+def _stance(text: str) -> str | None:
+    """The stance this claim takes: 'pos', 'neg', or None (neutral/informational).
 
-
-def _has_cue(text: str, cues: tuple[str, ...]) -> bool:
+    First-cue-wins: whichever stance cue appears earliest in the claim decides.
+    'Strong on system design, walked through a scalable cache layer without
+    prompting' is positive despite the trailing 'without' — the earliest cue
+    ('strong') is the writer's actual stance.
+    """
     lowered = text.lower()
-    return any(cue in lowered for cue in cues)
+    best: tuple[int, str] | None = None
+    for cue in _NEGATION_CUES:
+        idx = lowered.find(cue)
+        if idx != -1 and (best is None or idx < best[0]):
+            best = (idx, "neg")
+    for cue in _POSITIVE_CUES:
+        idx = lowered.find(cue)
+        if idx != -1 and (best is None or idx < best[0]):
+            best = (idx, "pos")
+    return best[1] if best else None
 
 
 def _claims_diverge(a: list[Point], b: list[Point]) -> bool:

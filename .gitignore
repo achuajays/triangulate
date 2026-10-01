@@ -13,5 +13,4 @@ site/
 .coverage
 htmlcov/
 *.log
-.agents
-.github
+# .agents

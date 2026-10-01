@@ -7,7 +7,6 @@ name = "triangulate"
 version = "0.1.0"
 description = "Compare multiple free-text accounts of the same subject: find where they agree, disagree, and what's missing."
 readme = "README.md"
-license = "MIT"
 requires-python = ">=3.10"
 authors = [{ name = "Triangulate Contributors" }]
 keywords = ["llm", "nlp", "analysis", "multi-source", "conflict-detection"]

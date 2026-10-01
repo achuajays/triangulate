@@ -123,8 +123,22 @@ class Aligner:
         return out or ["general"]
 
     def _infer_dimensions(self, points: list[Point]) -> list[str]:
-        """Infer a dimension set from extracted points when none were given."""
+        """Infer a dimension set from extracted points when none were given.
+
+        Prefers the extractor's own per-point dimension labels (LLM backends
+        return meaningful ones); falls back to frequent-phrase extraction.
+        """
         import re
+
+        labels: list[str] = []
+        seen: set[str] = set()
+        for pt in points:
+            label = pt.dimension.strip().lower()
+            if label and label not in seen:
+                seen.add(label)
+                labels.append(label)
+        if len(labels) >= 2:
+            return labels[:8]
 
         counts: dict[str, int] = {}
         for pt in points:
@@ -139,4 +153,4 @@ class Aligner:
         if not dims:
             freq = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
             dims = [w for w, c in freq if c >= 2][:5]
-        return self._dedupe(dims)
+        return self._dedupe(dims or labels or ["general"])

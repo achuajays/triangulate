@@ -5,10 +5,16 @@ repo_url: https://github.com/workatustadarshajay/triangulate
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
+  - API reference: api.md
   - Examples:
       - Hiring debrief: examples/hiring.md
       - Medical second opinion: examples/medical.md
       - Code review consolidation: examples/code_review.md
       - Customer feedback rollup: examples/feedback.md
 
-theme: readthedocs
+theme:
+  name: material
+  palette:
+    primary: indigo
+  features:
+    - content.code.copy

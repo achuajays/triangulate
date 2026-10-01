@@ -28,10 +28,16 @@ class Triangulate:
     without touching this class.
     """
 
-    def __init__(self, backend: str | Backend = "local", **backend_kwargs):
-        self.backend: Backend = (
-            backend if isinstance(backend, Backend) else create_backend(backend, **backend_kwargs)
-        )
+    def __init__(self, backend: str | Backend, **backend_kwargs):
+        if isinstance(backend, str):
+            self.backend: Backend = create_backend(backend, **backend_kwargs)
+        elif callable(getattr(backend, "extract", None)):
+            self.backend = backend  # any duck-typed Backend drops in
+        else:
+            raise TypeError(
+                "backend must be a name ('local', 'anthropic', 'openai', 'gemini') "
+                "or an object with an extract(text, dimensions) method"
+            )
         self._extractor = Extractor(self.backend)
         self._aligner = Aligner()
         self._scan = ConflictScan()
