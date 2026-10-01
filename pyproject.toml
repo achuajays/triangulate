@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "triangulate"
+version = "0.1.0"
+description = "Compare multiple free-text accounts of the same subject: find where they agree, disagree, and what's missing."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Triangulate Contributors" }]
+keywords = ["llm", "nlp", "analysis", "multi-source", "conflict-detection"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Linguistic",
+]
+# Core is dependency-free: everything heavy is behind extras (see §8 of the plan).
+dependencies = []
+
+[project.optional-dependencies]
+local = []
+anthropic = ["anthropic>=0.40.0"]
+openai = ["openai>=1.40.0"]
+gemini = ["google-genai>=2.25.0"]
+all = [
+    "anthropic>=0.40.0",
+    "openai>=1.40.0",
+    "google-genai>=2.25.0",
+]
+dev = [
+    "pytest>=8.0",
+    "anthropic>=0.40.0",
+    "openai>=1.40.0",
+    "google-genai>=2.25.0",
+]
+
+[project.scripts]
+triangulate = "triangulate.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/triangulate/triangulate"
+Documentation = "https://github.com/triangulate/triangulate/tree/main/docs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/triangulate"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

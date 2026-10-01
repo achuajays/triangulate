@@ -1,0 +1,14 @@
+[
+  {
+    "source_id": "interviewer_1",
+    "text": "Strong on system design, walked through a scalable cache layer without prompting. A bit quiet in the room, answers needed follow-up questions to open up. Seems like a good culture fit, collaborative and curious. Not much hands-on coding evidence, only whiteboard talk."
+  },
+  {
+    "source_id": "interviewer_2",
+    "text": "Struggled when asked to design the cache layer, could not explain invalidation strategy. Excellent communicator though, very structured answers and easy to follow. Unsure about culture fit, seemed more focused on individual output than team work. Coding exercise was clean and fast."
+  },
+  {
+    "source_id": "interviewer_3",
+    "text": "Good communicator, very structured answers. System design was shallow, no mention of tradeoffs when designing the cache layer. Great culture fit, asked thoughtful questions about how the team works. Did not attempt the coding exercise, ran out of time."
+  }
+]

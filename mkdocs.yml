@@ -1,0 +1,14 @@
+site_name: triangulate
+site_description: Find where your sources disagree — before someone has to find out the hard way.
+repo_url: https://github.com/workatustadarshajay/triangulate
+
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - Examples:
+      - Hiring debrief: examples/hiring.md
+      - Medical second opinion: examples/medical.md
+      - Code review consolidation: examples/code_review.md
+      - Customer feedback rollup: examples/feedback.md
+
+theme: readthedocs
