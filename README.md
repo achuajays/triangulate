@@ -1,4 +1,4 @@
-# triangulate
+# triangulate 
 
 *Find out where your sources disagree — before someone has to find out the hard way.*
 
